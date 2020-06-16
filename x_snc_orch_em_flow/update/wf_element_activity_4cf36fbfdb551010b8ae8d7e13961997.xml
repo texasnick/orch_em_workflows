@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="wf_element_activity">
+    <wf_element_activity action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <attributes/>
+        <base_provider display_value="SSH">ebee8be6d7022100dfc260affd610368</base_provider>
+        <category>SSH</category>
+        <checked_out_by/>
+        <default_height/>
+        <default_width/>
+        <description>Orchestration activity to run a SSH command that is passed into the activity from a workflow</description>
+        <image>images/heisenberg_icons/workflow_ie8/provider_ssh.png</image>
+        <input_meta>{"name":"Input","type":"DATA_OBJECT","properties":[{"name":"Hostname","type":"STRING","mandatory":true},{"name":"Directory","type":"STRING","mandatory":false},{"name":"Command","type":"STRING","mandatory":false},{"name":"CredAlias","type":"STRING","mandatory":false}]}</input_meta>
+        <input_process_script/>
+        <input_transform>{"source":"${activityInput.Hostname}","command":"${activityInput.Command}","directory":"${activityInput.Directory}","credential_tag":"${activityInput.CredAlias}","midCapabilities":"2d20f2760a0006bc095bf17ae4e0d4ee","long_running":"false","must_sudo":"false"}</input_transform>
+        <local_variables/>
+        <name>SSH Command</name>
+        <output_meta>{"name":"Output","type":"DATA_OBJECT","properties":[{"name":"output","type":"STRING"},{"name":"errorMessage","type":"STRING"}]}</output_meta>
+        <output_process_script><![CDATA[if (gs.nil(activityOutput.errorMessage)) {
+	try {	
+		var output = activityOutput.output;
+		
+		if (output != null) {
+			gs.info('---> activityOutput.output: ' + activityOutput.output);   // DEBUG
+		}
+	}
+	catch(err) {
+		gs.error('---> ERROR: ' + err);
+	}
+}
+else {
+	gs.info('---> activityOutput.errorMessage: ' + activityOutput.errorMessage);   // DEBUG
+}]]></output_process_script>
+        <output_transform>[{"toLink":"activityOutput.errorMessage","description":"","to":"errorMessage","toType":"string","toDestination":"activityOutput","sourceLabel":"executionResult.errorMessages","from":"${executionResult.errorMessages}","fromSource":"executionResult","type":"Direct","children":"[]","translation":""},{"toLink":"activityOutput.output","description":"","to":"output","toType":"string","toDestination":"activityOutput","sourceLabel":"executionResult.output","from":"${executionResult.output}","fromSource":"executionResult","type":"Direct","children":"[]","translation":""}]</output_transform>
+        <processing_script/>
+        <sample_payloads>{}</sample_payloads>
+        <short_description>Generic activity to run a passed in SSH command</short_description>
+        <style/>
+        <sys_class_name>wf_element_activity</sys_class_name>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 18:41:12</sys_created_on>
+        <sys_id>4cf36fbfdb551010b8ae8d7e13961997</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>SSH Command</sys_name>
+        <sys_package display_value="Orch EM Flows" source="x_snc_orch_em_flow">b6083a7bdb111010b8ae8d7e13961932</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Orch EM Flows">b6083a7bdb111010b8ae8d7e13961932</sys_scope>
+        <sys_update_name>wf_element_activity_4cf36fbfdb551010b8ae8d7e13961997</sys_update_name>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 19:12:24</sys_updated_on>
+        <version_container_id>c0993effdb111010b8ae8d7e13961924</version_container_id>
+    </wf_element_activity>
+    <sys_translated_text action="delete_multiple" query="documentkey=4cf36fbfdb551010b8ae8d7e13961997"/>
+    <wf_versionable action="INSERT_OR_UPDATE">
+        <checked_out/>
+        <checked_out_by/>
+        <published>false</published>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 18:41:12</sys_created_on>
+        <sys_id>1cf36fbfdb551010b8ae8d7e13961998</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 19:12:24</sys_updated_on>
+        <valid_from>2020-06-16 18:42:59</valid_from>
+        <valid_to/>
+        <version>4</version>
+        <version_container_id>c0993effdb111010b8ae8d7e13961924</version_container_id>
+        <wf_element_definition display_value="SSH Command">4cf36fbfdb551010b8ae8d7e13961997</wf_element_definition>
+    </wf_versionable>
+    <wf_condition_default action="INSERT_OR_UPDATE">
+        <activity_definition display_value="SSH Command">4cf36fbfdb551010b8ae8d7e13961997</activity_definition>
+        <condition>activityOutput.errorMessage==''</condition>
+        <derived_definition>b899faffdb111010b8ae8d7e13961983</derived_definition>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <name>Success</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 18:41:12</sys_created_on>
+        <sys_id>94f36fbfdb551010b8ae8d7e13961999</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 18:41:12</sys_updated_on>
+    </wf_condition_default>
+    <wf_condition_default action="INSERT_OR_UPDATE">
+        <activity_definition display_value="SSH Command">4cf36fbfdb551010b8ae8d7e13961997</activity_definition>
+        <condition/>
+        <derived_definition>c55af6b3db511010b8ae8d7e139619f3</derived_definition>
+        <else_flag>true</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <name>Failure</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 18:41:12</sys_created_on>
+        <sys_id>dcf36fbfdb551010b8ae8d7e13961999</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 18:41:12</sys_updated_on>
+    </wf_condition_default>
+    <wf_versionable action="update_multiple" query="version_container_id=c0993effdb111010b8ae8d7e13961924^sys_id!=1cf36fbfdb551010b8ae8d7e13961998^version&lt;4">
+        <published>false</published>
+    </wf_versionable>
+    <wf_activity action="update_multiple" is_dot_walk_query="true" query="workflow_version.published=true^activity_definition.version_container_id=c0993effdb111010b8ae8d7e13961924">
+        <new_activity_definition>4cf36fbfdb551010b8ae8d7e13961997</new_activity_definition>
+        <out_of_date>true</out_of_date>
+        <notes>There is a newer version of this activity.
+
+To update the activity, check out the workflow, select the activity, right click
+and select 'Update activity' to use the latest version, then publish the workflow</notes>
+    </wf_activity>
+</record_update>

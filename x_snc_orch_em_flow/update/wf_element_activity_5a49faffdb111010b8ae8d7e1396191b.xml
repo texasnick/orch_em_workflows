@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="wf_element_activity">
+    <wf_element_activity action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <attributes/>
+        <base_provider display_value="SSH">ebee8be6d7022100dfc260affd610368</base_provider>
+        <category>SSH</category>
+        <checked_out_by/>
+        <default_height/>
+        <default_width/>
+        <description>Orchestration activity to run a SSH command that is passed into the activity from a workflow</description>
+        <image>images/heisenberg_icons/workflow_ie8/provider_ssh.png</image>
+        <input_meta>{"name":"Input","type":"DATA_OBJECT","properties":[{"name":"Hostname","type":"STRING","mandatory":true},{"name":"Directory","type":"STRING","mandatory":false},{"name":"Command","type":"STRING","mandatory":false},{"name":"CredAlias","type":"STRING","mandatory":false}]}</input_meta>
+        <input_process_script/>
+        <input_transform>{"source":"${activityInput.Hostname}","command":"${activityInput.Command}","directory":"${activityInput.Directory}","credential_tag":"${activityInput.CredAlias}","midCapabilities":"2d20f2760a0006bc095bf17ae4e0d4ee","long_running":"false","must_sudo":"false"}</input_transform>
+        <local_variables/>
+        <name>SSH Command</name>
+        <output_meta>{"name":"Output","type":"DATA_OBJECT","properties":[{"name":"result","type":"STRING"},{"name":"output","type":"STRING"},{"name":"errorMessage","type":"STRING"}]}</output_meta>
+        <output_process_script><![CDATA[if (gs.nil(executionResult.error)) {
+	activityOutput.result = "success";
+	try {	
+		var output = executionResult.output;
+		
+		if (output != null) {
+			activityOutput.output = output.substring(output.indexOf('<Objects>'));
+			gs.info('---> activityOutput.output: ' + activityOutput.output);   // DEBUG
+		}
+	}
+	catch(err) {
+		gs.error('---> ERROR: ' + err);
+	}
+}
+else {
+	activityOutput.result = "failure";
+	activityOutput.errorMessage = executionResult.errorMessages;
+	gs.info('---> activityOutput.errorMessage: ' + activityOutput.errorMessage);   // DEBUG
+}]]></output_process_script>
+        <output_transform/>
+        <processing_script/>
+        <sample_payloads>{}</sample_payloads>
+        <short_description>Generic activity to run a passed in SSH command</short_description>
+        <style/>
+        <sys_class_name>wf_element_activity</sys_class_name>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 15:36:03</sys_created_on>
+        <sys_id>5a49faffdb111010b8ae8d7e1396191b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>SSH Command</sys_name>
+        <sys_package display_value="Orch EM Flows" source="x_snc_orch_em_flow">b6083a7bdb111010b8ae8d7e13961932</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Orch EM Flows">b6083a7bdb111010b8ae8d7e13961932</sys_scope>
+        <sys_update_name>wf_element_activity_5a49faffdb111010b8ae8d7e1396191b</sys_update_name>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 18:23:11</sys_updated_on>
+        <version_container_id>c0993effdb111010b8ae8d7e13961924</version_container_id>
+    </wf_element_activity>
+    <sys_translated_text action="delete_multiple" query="documentkey=5a49faffdb111010b8ae8d7e1396191b"/>
+    <wf_versionable action="INSERT_OR_UPDATE">
+        <checked_out/>
+        <checked_out_by/>
+        <published>false</published>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 15:36:03</sys_created_on>
+        <sys_id>84997e33db511010b8ae8d7e139619b1</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 18:23:11</sys_updated_on>
+        <valid_from>2020-06-16 17:39:21</valid_from>
+        <valid_to/>
+        <version>1</version>
+        <version_container_id>c0993effdb111010b8ae8d7e13961924</version_container_id>
+        <wf_element_definition display_value="SSH Command">5a49faffdb111010b8ae8d7e1396191b</wf_element_definition>
+    </wf_versionable>
+    <wf_condition_default action="INSERT_OR_UPDATE">
+        <activity_definition display_value="SSH Command">5a49faffdb111010b8ae8d7e1396191b</activity_definition>
+        <condition>activityOuput.result=='success'</condition>
+        <derived_definition/>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <name>Success</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 15:40:14</sys_created_on>
+        <sys_id>b899faffdb111010b8ae8d7e13961983</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 15:40:14</sys_updated_on>
+    </wf_condition_default>
+    <wf_condition_default action="INSERT_OR_UPDATE">
+        <activity_definition display_value="SSH Command">5a49faffdb111010b8ae8d7e1396191b</activity_definition>
+        <condition>activityOuput.result!='success'</condition>
+        <derived_definition/>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <name>Failure</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>nick.ryan</sys_created_by>
+        <sys_created_on>2020-06-16 15:40:14</sys_created_on>
+        <sys_id>c55af6b3db511010b8ae8d7e139619f3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>nick.ryan</sys_updated_by>
+        <sys_updated_on>2020-06-16 15:40:14</sys_updated_on>
+    </wf_condition_default>
+</record_update>
